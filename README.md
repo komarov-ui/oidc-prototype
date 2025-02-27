@@ -45,37 +45,37 @@
 
 Before running frontend and backend service, you must raise up *Keycloak Server*.
 
-It's really simple to do by following Docker command:
+It's really simple to do with following Docker command in **Windows PowerShell**:
 
-```
-docker run 
-  -p 8443:8443 \
-  -p 9000:9000 \
-  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
-  -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me \
-  -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt \
-  -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key \
-  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt \
-  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key \
-  quay.io/keycloak/keycloak:26.1.2 \
-  start \
+```powershell
+docker run `
+  -p 8443:8443 `
+  -p 9000:9000 `
+  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin `
+  -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me `
+  -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt `
+  -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key `
+  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt `
+  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key `
+  quay.io/keycloak/keycloak:26.1.2 `
+  start `
   --hostname=localhost
 ```
 
 If you use Podman instead of Docker, command will be almost the same:
 
-```
-podman run 
-  -p 8443:8443 \
-  -p 9000:9000 \
-  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
-  -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me \
-  -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt \
-  -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key \
-  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt \
-  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key \
-  quay.io/keycloak/keycloak:26.1.2 \
-  start \
+```powershell
+podman run `
+  -p 8443:8443 `
+  -p 9000:9000 `
+  -e KC_BOOTSTRAP_ADMIN_USERNAME=admin `
+  -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me `
+  -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt `
+  -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key `
+  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt `
+  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key `
+  quay.io/keycloak/keycloak:26.1.2 `
+  start `
   --hostname=localhost
 ```
 
