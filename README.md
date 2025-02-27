@@ -36,7 +36,7 @@
 
 9. Create folder `ssl` in root of projects `react-oidc-prototype` and `nodejs-oidc-prototype`. Put `server.key` and `server.crt` in there (copy them there).
 
-    **OR* you can go with alternative way and just change paths to certs in these projects.
+    **OR** you can go with alternative way and just change paths to certs in these projects.
 
     * **vite.config.ts** - in `react-oidc-prototype`
     * **app.js** - in `nodejs-oidc-prototype` (almost end of the file)
@@ -207,7 +207,7 @@ https://localhost:5173
 
 2) Copy access token from cookies into some text file.
 
-3) Wait for <Access Token Lifespan>.
+3) Wait for `<Access Token Lifespan>`.
 
 4) Refresh page "Protected Page".
 
@@ -215,6 +215,6 @@ https://localhost:5173
 
 6) Compare it with previous token: they must be different.
 
-7) Wait for <SSO Session Idle>.
+7) Wait for `<SSO Session Idle>`.
 
 8) Refresh page "Protected Page". You must be redirected into Keycloak Login Page.
