@@ -1,5 +1,9 @@
 # oidc-prototype
 
+**Frontend Application**: https://github.com/komarov-ui/react-oidc-prototype
+
+**Backend Service**: https://github.com/komarov-ui/nodejs-oidc-prototype
+
 ## Create SSL self-signed certificate
 
 1. Go to `https://slproweb.com/products/Win32OpenSSL.html`.
