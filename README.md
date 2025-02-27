@@ -55,8 +55,8 @@ docker run `
   -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me `
   -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt `
   -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key `
-  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt `
-  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key `
+  -v C:/<path_to_folder_with_certs>/server.crt:/opt/keycloak/conf/server.crt `
+  -v C:/<path_to_folder_with_certs>/server.key:/opt/keycloak/conf/server.key `
   quay.io/keycloak/keycloak:26.1.2 `
   start `
   --hostname=localhost
@@ -72,8 +72,8 @@ podman run `
   -e KC_BOOTSTRAP_ADMIN_PASSWORD=change_me `
   -e KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt `
   -e KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key `
-  -v C:/<path_to_backend_project>/ssl/server.crt:/opt/keycloak/conf/server.crt `
-  -v C:/<path_to_backend_project>/ssl/server.key:/opt/keycloak/conf/server.key `
+  -v C:/<path_to_folder_with_certs>/server.crt:/opt/keycloak/conf/server.crt `
+  -v C:/<path_to_folder_with_certs>/server.key:/opt/keycloak/conf/server.key `
   quay.io/keycloak/keycloak:26.1.2 `
   start `
   --hostname=localhost
