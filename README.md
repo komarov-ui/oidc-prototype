@@ -8,6 +8,8 @@
 
 1. Go to `https://slproweb.com/products/Win32OpenSSL.html`.
 
+    **NOTE:** OpenSSL Light is enough for our purposes.
+
 2. Download OpenSSL for Windows x64 and install it.
 
 3. Update your PATH env variable in Windows. Add new row with value: `<Path to OpenSSL>/bin`. Save.
