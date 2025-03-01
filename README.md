@@ -12,6 +12,8 @@
 
 3. Update your PATH env variable in Windows. Add new row with value: `<Path to OpenSSL>/bin`. Save.
 
+    **NOTE:** Replace `<Path to OpenSSL>` with path to folder where OpenSSL installed on your computer.
+
 4. Do checking in PowerShell: `opensll version`. If there is an OpenSSL version - it's OK, keep going.
 
 5. Go to folder `create-ssl-certs` (previously, you have to clone project or download it as ZIP-archive).
@@ -45,7 +47,9 @@
 
 Before running frontend and backend service, you must raise up *Keycloak Server*.
 
-It's really simple to do with following Docker command in **Windows PowerShell**:
+It's really simple to do with following Docker command in **Windows PowerShell**.
+
+**NOTE:** Replace `<path_to_folder_with_certs>` to appropriate path in commands.
 
 ```powershell
 docker run `
@@ -126,13 +130,13 @@ Go to Admin Console ( `https://localhost:8443/admin/master/console/`).
 
 4. Put any username, email, first name, last name.
 
-5. Click no "Create".
+5. Click on "Create".
 
 6. After navigation to user page, go to "Credentials" tab.
 
 7. Click on "Set password".
 
-8. Disable "Temporary" flag, set password and repeat password. Click "Save".
+8. Disable "Temporary" flag, set password and repeat password. Click on "Save".
 
 ### Create client
 
@@ -174,19 +178,19 @@ https://localhost:5173
 
 12. Copy "Client secret" and put it into .env file in backend service in appropriate variable (KEYCLOAK_HTTPS_CLIENT_SECRET).
 
-### Create GitHub OAuth2 app for example of identity broker mode
+### Create GitHub OAuth app for example of identity broker mode
 
 1. Go to your GitHub account.
 
-2. Go to "Settings" -> "Developer Settings" -> "OAuth2 Apps".
+2. Go to "Settings" -> "Developer Settings" -> "OAuth Apps".
 
-3. Click on "New OAuth2 App".
+3. Click on "New OAuth App".
 
 4. Set any available application name (is not used in the prototype).
 
 5. Set "Homepage URL" as `https://localhost:5173`.
 
-6. Set "Authorization callback URL" as `https://localhost:5173/login`.
+6. Set "Authorization callback URL" as `https://localhost:8443/realms/oidc-app/broker/github/endpoint`.
 
 7. Click on "Register application".
 
