@@ -20,6 +20,12 @@
 
 6. Open PowerShell in this folder and run `./generate-cert.ps1`.
 
+    **NOTE:** If you are not allowed to run, you may try following command in the same folder:
+
+    ```
+    powershell -ExecutionPolicy Bypass -File .\generate-cert.ps1
+    ```
+
 7. If there are 2 files `server.key` and `server.crt` - it`s OK, keep going.
 
 8. Double-click on `server.crt` to install certificate.
