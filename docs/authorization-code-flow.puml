@@ -1,0 +1,91 @@
+@startuml OIDC Authorization Code Flow
+actor User
+participant Browser
+participant NGINX
+participant Backend
+participant Keycloak
+
+== Initialization ==
+
+User -> Browser : Open "apihub.qubership.org"
+Browser -> NGINX : GET /
+NGINX -[#blue]-> Browser : HTML, CSS, JS
+
+User -> Browser : Click on "Protected Page"
+Browser -> Browser : Navigates to /protected-page
+Browser -[#green]> Backend : GET /api/protected-resource
+Backend -[#red]-> Browser : 401 Unauthorized
+Browser -> Backend : GET /auth
+note over Backend : Requiring authorization URL
+Backend -> Backend : Generate PKCE code_verifier
+Backend -> Backend : Generate PKCE code_challenge with SHA-256
+Backend -> Backend : Build authorization URL with "code" param
+note over Backend : "code" is unique temporary authorization code which will be exchanged for token
+Backend -[#blue]-> Browser : Authorization URL (Keycloak)
+Browser -> Keycloak : Navigates to <Authorization URL> in Keycloak
+Keycloak --> Browser : Login Page
+
+User -> Browser : Type "my_username" in field "Username"
+User -> Browser : Type "my_password" in field "Password"
+User -> Browser : Click on "Sign In"
+Browser -> Keycloak : Request authentication
+Keycloak -> Keycloak : Authenticating
+alt Is authenticated
+  Keycloak -[#blue]-> Browser : Redirects to "redirect_uri" (our Login Page)
+else Is NOT authenticated
+  Keycloak -[#red]-> Browser : Show authentication error in its own Login Page
+end
+
+== User is authenticated ==
+
+Browser -> Backend : GET /auth/token
+note over Backend : Exchange authorization code for token
+Backend -> Keycloak : POST /token\n{ client_id, client_secret, grant-type="authorization_code", code, redirect_uri, code_verifier / nonce }
+Keycloak --> Backend : Access token, refresh token (JWT)
+Backend --> Browser : Save access token, refresh token in HttpOnly Cookies
+Browser -> Browser : Navigates to page visited before auth had started
+note over Browser: Navigates to "Protected Page" in our example
+
+== Accessing protected resources ==
+
+Browser -[#green]> Backend : GET /api/protected-resource
+note over Backend : Provided HttpOnly Cookies
+
+Backend -> Backend : Check if access token is provided
+
+Backend -> Keycloak : POST /token/introspect\n{client_id, client_secret, token, token_type_hint }
+note over Keycloak : Validating provided access token
+alt Access token is valid
+  Keycloak -[#red]-> Backend : Token is valid
+else
+  Keycloak -[#blue]-> Backend : Token is NOT valid
+end
+Backend -> Backend : Check if access token is expired
+
+alt Access token is provided, NOT expired, valid
+  Backend -[#blue]-> Browser : Protected data
+else Access token is provided, NOT expired, NOT valid
+  Backend -[#red]-> Browser : Clear cookies
+  Backend -[#red]-> Browser : 401 Unauthorized
+else Access token is provided, expired, valid
+  Backend -> Keycloak : Refresh token
+  Keycloak -> Keycloak : POST /token\n{ client_id, client_secret, grant-type="refresh_token", refresh_token }
+  alt Refreshed successfully
+    Keycloak -[#blue]-> Backend : New tokens
+    Backend -[#blue]-> Browser : Save new tokens in HttpOnly Cookies
+  else
+    Keycloak -[#red]-> Backend : 500 Internal Error
+    note over Keycloak : Cannot refresh token, session is expired
+    Backend -[#red]-> Browser : Clear cookies
+    Backend -[#red]-> Browser : 401 Unauthorized
+  end
+end
+
+== Logging Out ==
+
+User -> Browser : Click on "Logout"
+Browser -> Keycloak : Navigates to Logout URL
+Keycloak -> Keycloak : Terminates session, revokes tokens
+Keycloak -> Browser : Redirects to the last page visited before logging out had started
+
+@enduml
